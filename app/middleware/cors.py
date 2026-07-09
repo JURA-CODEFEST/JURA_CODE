@@ -5,7 +5,7 @@ def usingcors(app:FastAPI):
     app.add_middleware(
         CORSMiddleware,
         allow_origins=[
-            "https://jura-frontend.vercel.app/"
+            "https://jura-frontend.vercel.app"
         ],
         allow_credentials=True,
         allow_methods=["*"],
