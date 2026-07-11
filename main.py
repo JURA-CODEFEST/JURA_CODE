@@ -4,7 +4,7 @@ from app.utils.init_db import create_tables
 from app.router.auth import auth
 from app.router.test import testrouter
 from app.middleware.cors import usingcors
-from app.router.refresh_sos_id import refresh_sos
+from app.router.sos import refresh_sos
 # from app.utils.protectroute import get_current_user
 # from app.db.schemas.users import UserOutput
 

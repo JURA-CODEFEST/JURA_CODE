@@ -49,14 +49,14 @@ class UserService:
             return user
         raise HTTPException(status_code=400,detail="User not found")
     
-    def refresh_sosid(self,user_id:int):
-        if self.__userRepo.check_user_by_id(user_id=user_id):
-            while True:
-                new_api = API_generator.generate_secure_string(16)
-                user = self.__userRepo.check_user_by_sos_id(new_api)
-                if not user:
-                    self.__userRepo.update_sos_id(user_id,new_api)
-                    return {"new_sos_id":new_api}
+    # def refresh_sosid(self,user_id:int):
+    #     if self.__userRepo.check_user_by_id(user_id=user_id):
+    #         while True:
+    #             new_api = API_generator.generate_secure_string(16)
+    #             user = self.__userRepo.check_user_by_sos_id(new_api)
+    #             if not user:
+    #                 self.__userRepo.update_sos_id(user_id,new_api)
+    #                 return {"new_sos_id":new_api}
                     
             
-        raise HTTPException(status_code=400,detail="User not found")
+    #     raise HTTPException(status_code=400,detail="User not found")

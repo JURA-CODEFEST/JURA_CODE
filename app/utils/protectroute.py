@@ -1,6 +1,7 @@
 from fastapi import Depends, Header, HTTPException, status
 from app.core.security.authHandler import AuthHandler
 from app.service.userService import UserService
+from app.service.sosService import SosService
 from app.core.database import get_db
 from sqlalchemy.orm import Session
 from typing import Optional
