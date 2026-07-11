@@ -5,6 +5,7 @@ from app.router.auth import auth
 from app.router.test import testrouter
 from app.middleware.cors import usingcors
 from app.router.sos import refresh_sos
+from app.router.guardian import guardian
 # from app.utils.protectroute import get_current_user
 # from app.db.schemas.users import UserOutput
 
@@ -17,6 +18,7 @@ app = FastAPI(lifespan=lifespan)
 app.include_router(router=auth,tags=["auth"],prefix="/auth")
 app.include_router(router=testrouter,tags=["test"],prefix="/test")
 app.include_router(router=refresh_sos,tags=["sos"])
+app.include_router(router=guardian,tags=["guardian"])
 
 usingcors(app)
 
