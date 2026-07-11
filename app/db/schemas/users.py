@@ -12,6 +12,7 @@ class UserOutput(BaseModel):
     first_name : str
     last_name : str
     email : EmailStr
+    sos_id : str
 
 class UserUpdate(BaseModel):
     id : int
