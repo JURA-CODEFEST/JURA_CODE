@@ -15,3 +15,20 @@ def add_guardian(guardian_data:Addguardian,session : Session=Depends(get_db),cur
     except Exception as error:
         print(error)
         raise error  
+    
+@guardian.get("/guardian/list")
+def list_guardian(session:Session=Depends(get_db),current_user=Depends(get_current_user)):
+    try:
+        return GuardianService(session=session).show_guardian(user_id=current_user.id)
+    except Exception as error:
+        print(error)
+        raise error  
+    
+
+@guardian.delete("/delete-guardian/{guardian_id}")
+def delete_guardian(guardian_id:int,session:Session=Depends(get_db),current_user=Depends(get_current_user)):
+    try:
+        return GuardianService(session=session).remove_guardian(user_id=current_user.id,guardian_id=guardian_id)
+    except Exception as error:
+        print(error)
+        raise error

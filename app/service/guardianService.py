@@ -43,8 +43,29 @@ class GuardianService:
 
                     # return self.__guardianRepo.create_guardian_connection(connection)
 
-        # def show_guardian(self,user_id:int):
-        #       user = self.__userRepo.check_user_by_id(user_id)
-        #       if user:
-        #             return Showguardian(user)
-        #       raise HTTPException(status_code=404,detail="")
+        def show_guardian(self,user_id:int):
+              user = self.__userRepo.check_user_by_id(user_id)
+              guardian_list = []
+              if not user:
+                    raise HTTPException(status_code=400,detail="User not found")
+              if user:
+                    guardian = self.__guardianRepo.get_guardian(user_id=user_id)
+                    for guardians in guardian:
+                          guardian_list.append(guardians.guardian_id)
+              
+              guardian_info = []
+              for guardian in guardian_list:
+                    temp_user = self.__userRepo.check_user_by_id(guardian)
+                    guardian_info.append(
+                          Showguardian(
+                          id = temp_user.id,
+                          first_name = temp_user.first_name,
+                          last_name = temp_user.last_name,
+                          sos_id = temp_user.sos_id
+                    )
+                    )
+              return guardian_info
+        
+        def remove_guardian(self,user_id:int,guardian_id:int):
+              return self.__guardianRepo.del_guardian(user_id=user_id,guardian_id=guardian_id)
+                          
