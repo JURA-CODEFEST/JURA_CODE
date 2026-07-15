@@ -13,6 +13,7 @@ class UserOutput(BaseModel):
     last_name : str
     email : EmailStr
     sos_id : str
+    role : bool
 
 class UserUpdate(BaseModel):
     id : int

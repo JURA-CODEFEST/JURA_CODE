@@ -6,6 +6,7 @@ from app.db.repository.user_repo import UserRepository
 from app.db.models.sos import Sos
 from app.db.schemas.sos import User_clicks_sos
 from fastapi import HTTPException
+from geoalchemy2.elements import WKTElement
 
 
 class SosService:
@@ -26,13 +27,17 @@ class SosService:
         def create_sos_event(self,user_id:int,sos_info:User_clicks_sos):
              user = self.__userRepo.check_user_by_id(user_id=user_id)
              if user:
+                point = WKTElement(
+                     f"POINT({sos_info.longitude} {sos_info.latitude})",
+                     srid=4326
+                )
                 create_sos = Sos(
                     user_id = user.id,
-                    latitude = sos_info.latitude,
-                    longitude = sos_info.longitude,
+                    location = point,
                     status = "active"
                 )
-                return self.__sosRepo.create_sos_event(create_sos)
+                self.__sosRepo.create_sos_event(create_sos)
+                return {"message":"SOS created"}
              raise HTTPException(status_code=400,detail="User not found")
         
         # def sos_info_sender(self,user_id:int):

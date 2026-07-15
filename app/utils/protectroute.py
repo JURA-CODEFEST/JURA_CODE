@@ -21,7 +21,20 @@ def get_current_user(session: Session=Depends(get_db),authorization: Optional[st
         try:
             user = UserService(session=session).get_user_by_id(payload["user_id"])
             # print(user.sos_id)
-            return UserOutput(id=user.id,first_name=user.first_name,last_name=user.last_name,email=user.email,sos_id=user.sos_id)
+            return UserOutput(id=user.id,first_name=user.first_name,last_name=user.last_name,email=user.email,sos_id=user.sos_id,role=user.role)
         except Exception as error:
             raise error
         
+def admin_check_for_privileged_endpoints(current_user: UserOutput=Depends(get_current_user)):
+    # user = UserService(session=session).get_user_by_id(current_user.id)
+
+    # if user.role == 1:
+    #     return UserOutput(id=user.id,first_name=user.first_name,last_name=user.last_name,email=user.email,sos_id=user.sos_id)
+            
+    # raise HTTPException(
+    # status_code=status.HTTP_403_FORBIDDEN,
+    # detail="Admin access required"
+    # )
+    if current_user.role == 1:
+        return current_user
+    raise HTTPException(status_code=status.HTTP_403_FORBIDDEN,detail = "Admin access required")
