@@ -1,6 +1,8 @@
 from app.db.repository.base_repo import BaseRepository
 from app.db.models.users import User
 from app.db.models.sos import Sos
+from sqlalchemy import func ## chatgpt ho harnu parxa postgis ramrari
+from geoalchemy2 import Geometry
 
 class SosRepo(BaseRepository):
     def update_sos_id(self,user_id:int,sos_id):
@@ -14,9 +16,24 @@ class SosRepo(BaseRepository):
         user = self.session.query(User).filter_by(sos_id=sos_id).first()
         return user
     
-    def check_user_by_id(self,user_id:int):
-        user = self.session.query(Sos).filter_by(user_id=user_id).first()
-        return user
+    def check_alert_by_id(self,user_id:int):
+        
+        alert = self.session.query(
+            Sos,
+            func.ST_Y(Sos.location.cast(Geometry)).label("latitude"),
+            func.ST_X(Sos.location.cast(Geometry)).label("longitude")
+        ).filter(Sos.user_id == user_id).first()
+        return alert
+    
+    def check_alert_by_id_all(self,user_id:int):
+        
+        alert = self.session.query(
+            Sos,
+            func.ST_Y(Sos.location.cast(Geometry)).label("latitude"),
+            func.ST_X(Sos.location.cast(Geometry)).label("longitude")
+        ).filter(Sos.user_id == user_id).all()
+        return alert
+    
 
     def create_sos_event(self,create_sos:Sos):
         #  user = self.session.query(Sos).filter_by(user_id=create_sos.id)

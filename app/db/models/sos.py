@@ -9,4 +9,4 @@ class Sos(Base):
     location = Column(
         Geography(geometry_type="POINT",srid=4326)
     )
-    status = Column(String(20))
+    status = Column(String(20),default="active")

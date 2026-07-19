@@ -9,6 +9,7 @@ from app.router.guardian import guardian
 from app.router.report import report
 # from app.utils.protectroute import get_current_user
 # from app.db.schemas.users import UserOutput
+from app.router.fcm_token import fcm
 
 @asynccontextmanager
 async def lifespan(app:FastAPI):
@@ -21,6 +22,7 @@ app.include_router(router=testrouter,tags=["test"],prefix="/test")
 app.include_router(router=refresh_sos,tags=["sos"])
 app.include_router(router=guardian,tags=["guardian"])
 app.include_router(router=report,tags=["report"],prefix="/report")
+app.include_router(router=fcm,tags=["fcm"])
 
 usingcors(app)
 
