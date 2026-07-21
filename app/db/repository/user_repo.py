@@ -6,7 +6,7 @@ class UserRepository(BaseRepository):
     def create_user(self,user : User):
         # newUser = User(**user_entered_data.model_dump(exclude_none=True))
         self.session.add(user)
-        self.session.commit()
+        self.session.flush()
         self.session.refresh(user)
         return user
     
@@ -20,6 +20,12 @@ class UserRepository(BaseRepository):
     
     def check_user_by_id(self, user_id: int):
         user = self.session.query(User).filter_by(id=user_id).first()
+        return user
+    
+    def update_user(self,user:User):
+        self.session.add(user)
+        self.session.flush()
+        self.session.refresh(user)
         return user
     
     # def update_sos_id(self,user_id:int,sos_id):

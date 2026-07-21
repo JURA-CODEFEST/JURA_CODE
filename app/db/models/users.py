@@ -10,3 +10,4 @@ class User(Base):
     password = Column(String(250))
     sos_id = Column(String(20),unique = True,nullable=False,index = True)
     role = Column(Boolean,default=0)
+    verified = Column(Boolean,default=0,nullable=False)
